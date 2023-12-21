@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="width=divace-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
     <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='pokeball.jpg')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -10,30 +11,40 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
 </head>
- <body>
-   
-    
+
+<body>
     <div class="container">
-        <img src="{{url_for('static',filename='pokelogo.png')}}" class="rounded mx-auto d-block" alt=".....">
-        <form method=  "post">
-        <input type="text" id="nombre" class="form-control" placeholder="Ingrese nombre del pokemon">
-        <button class="btn btn-outline-info" type="submit" id="button-addon2">Go!</button>
+        <img src="{{url_for('static',filename='logo.png')}}" class="rounded mx-auto d-block" alt="logo pokemon">
     </div>
-        </form> 
-        <div class="d-flex justify-content-center">
+
+    <form method="POST">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Ingrese el nombre del pokemon" name="name">
+            <button type="submit" id = "button-addon2" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+    <div class="d-flex justify-content-center">
+        {%if pokemon %}
         <div class="card" style="width: 18rem;">
-             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/197.svg">
+            <img src="{{ pokemon.photo }}"
+                class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">POKEMON</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Umbreon</h6>
-              <p class="card-text">heigth</p>
-              <p class="card-text">weigth</p>
-              <a href="#" class="btn btn-outline-dark">CAPTURA</a>
-              <a href="#" class="btn btn-outline-dark">INFO</a>
-            </div>
-          </div> 
-          </div>
- </body>
+                <h5 class="card-title">{{ pokemon.name }}</h5>
+                <p class="card-text"> Height: {{ pokemon.height }}</p>
+                <p class="card-text"> Weight: {{ pokemon.weight }}</p>
+                <p class="card-text"> Order: {{ pokemon.order }}</p>
+                <p class="card-text"> Type: {{ pokemon.type }}</p>
+                <p class="card-text"> Speed: {{ pokemon.speed }}</p>
+                <a href="#" class="btn btn-primary">Capturar</a>
+                <a href="{{ url_for('detalle', id=pokemon.id)}}" class="btn btn-primary">Detalle</a>
+            </div>    
+        </div>
+        {%else %}
+            <p>No seleccionaste ningun pokemon</p>
+        {% endif %}
+    </div>
+</body>
 
 </html>
